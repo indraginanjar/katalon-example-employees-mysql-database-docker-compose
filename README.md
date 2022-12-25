@@ -14,11 +14,23 @@ This is a docker-compose file to be use as a sample MySQL server for Katalon exa
 
 ## How to run
 
-To start MySQL Service, run:
+1. Pull sample database files
 
-```bash
-docker-compose up --force-recreate
-```
+    ```bash
+    git submodule update
+    ```
+
+2. Disable calling other sql/dump files from employees.sql, because it will be failed.
+
+    ```bash
+    ./scripts/test_db_employees_disable_call_dump.sh
+    ```
+
+3. To start MySQL Service, run:
+
+    ```bash
+    docker-compose up --force-recreate
+    ```
 
 ## How to stop
 
@@ -28,7 +40,7 @@ To shutdown, the services
 docker-compose down -v
 ```
 
-## Accessing SSH
+## Accessing MySQL
 
 To be able access the MySQL server type:
 
