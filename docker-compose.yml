@@ -1,0 +1,36 @@
+---
+# The code in this file is a modification from stack.yml at https://hub.docker.com/_/mysql/#!
+
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+    db:
+        image: mysql
+        # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+        # (this is just an example, not intended to be a production configuration)
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: example
+            MYSQL_DATABASE: employees
+        volumes:
+            - ./docker-entrypoint-initdb.d/test_db/employees.sql:/docker-entrypoint-initdb.d/01-employees.sql
+            - ./docker-entrypoint-initdb.d/test_db/load_departments.dump:/docker-entrypoint-initdb.d/02-load_departments.sql
+            - ./docker-entrypoint-initdb.d/test_db/load_employees.dump:/docker-entrypoint-initdb.d/03-load_employees.sql
+            - ./docker-entrypoint-initdb.d/test_db/load_dept_emp.dump:/docker-entrypoint-initdb.d/04-load_dept_emp.sql
+            - ./docker-entrypoint-initdb.d/test_db/load_dept_manager.dump:/docker-entrypoint-initdb.d/05-load_dept_manager.sql
+            - ./docker-entrypoint-initdb.d/test_db/load_titles.dump:/docker-entrypoint-initdb.d/06-load_titles.sql
+            - ./docker-entrypoint-initdb.d/test_db/load_salaries1.dump:/docker-entrypoint-initdb.d/07-load_salaries1.sql
+            - ./docker-entrypoint-initdb.d/test_db/load_salaries2.dump:/docker-entrypoint-initdb.d/08-load_salaries2.sql
+            - ./docker-entrypoint-initdb.d/test_db/load_salaries3.dump:/docker-entrypoint-initdb.d/09-load_salaries3.dsqlump
+            - ./docker-entrypoint-initdb.d/test_db/show_elapsed.dump:/docker-entrypoint-initdb.d/10-show_elapsed.sql
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080

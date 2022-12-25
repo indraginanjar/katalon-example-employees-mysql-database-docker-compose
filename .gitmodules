@@ -1,0 +1,3 @@
+[submodule "docker-entrypoint-initdb.d/test_db"]
+	path = docker-entrypoint-initdb.d/test_db
+	url = https://github.com/datacharmer/test_db.git
